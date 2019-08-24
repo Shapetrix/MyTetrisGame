@@ -1,3 +1,4 @@
 # MyTetrisGame
  Learning Coding Tetris
- pick up on video marker 22:00
+ follow along with this guy: Meth Meth Method
+ youtube link: https://www.youtube.com/watch?v=H2aW5V46khA&t=633s
