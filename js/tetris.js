@@ -151,6 +151,7 @@ function playerReset() {
   if (collide(arena, player)){
     arena.forEach(row => row.fill(0));
     player.score = 0;
+    dropInterval = 1000;
     updateScore();
   }
 }
@@ -194,18 +195,32 @@ function rotate(matrix, dir) {
 // dropCounter
 let dropCounter = 0;
 let dropInterval = 1000;
+let difficultyTime = 30000;
+let counter = 0;
 // store last time
 let lastTime = 0;
 // updates every frame
 function update(time = 0){
+
   // caulating time
   const deltaTime = time - lastTime;
   lastTime = time;
-
   dropCounter += deltaTime;
   if (dropCounter > dropInterval){
     playerDrop();
   }
+  counter += deltaTime;
+  console.log('counter ' + counter);
+
+  if(counter > difficultyTime){
+    console.log('setDifficulty');
+    if(dropInterval > 0){
+      dropInterval = dropInterval -(dropInterval * .25);
+      console.log(dropInterval);
+    }
+    counter = 0;
+  }
+
   // draw function
   draw();
   // draws every frame
