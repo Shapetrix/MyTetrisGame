@@ -210,13 +210,10 @@ function update(time = 0){
     playerDrop();
   }
   counter += deltaTime;
-  console.log('counter ' + counter);
 
   if(counter > difficultyTime){
-    console.log('setDifficulty');
     if(dropInterval > 0){
       dropInterval = dropInterval -(dropInterval * .25);
-      console.log(dropInterval);
     }
     counter = 0;
   }
@@ -251,7 +248,7 @@ const player = {
   score: 0,
 }
 
-// player controls
+// player keyboard Controls
 document.addEventListener('keydown', event =>{
   if (event.key === 'ArrowLeft'){
       playerMove(-1);
@@ -265,6 +262,54 @@ document.addEventListener('keydown', event =>{
       playerRotate(1);
   }
 });
+
+// player moblie controls
+/* link to git hub https://gist.github.com/SleepWalker/da5636b1abcbaff48c4d*/
+
+let touchstartX = 0;
+let touchstartY = 0;
+let touchendX = 0;
+let touchendY = 0;
+
+const gestureZone = document.getElementById('gestureZone');
+
+gestureZone.addEventListener('touchstart', function(event) {
+    touchstartX = event.changedTouches[0].screenX;
+    touchstartY = event.changedTouches[0].screenY;
+}, false);
+
+gestureZone.addEventListener('touchend', function(event) {
+    touchendX = event.changedTouches[0].screenX;
+    touchendY = event.changedTouches[0].screenY;
+    handleGesture();
+}, false);
+
+function handleGesture() {
+    if (touchendX <= touchstartX) {
+        playerMove(-1);
+        console.log('Swiped left');
+    }
+
+    if (touchendX >= touchstartX) {
+        playerMove(1);
+        console.log('Swiped right');
+    }
+
+    if (touchendY <= touchstartY) {
+        console.log('Swiped up');
+    }
+
+    if (touchendY >= touchstartY) {
+        playerDrop();
+        console.log('Swiped down');
+    }
+
+    if (touchendY === touchstartY) {
+        playerRotate(1);
+        console.log('Tap');
+    }
+}
+
 playerReset();
 updateScore();
 update();
